@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  mdb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+  redis:
+    image: redis:latest
+  server:
+    build: .
+    ports:
+      - 3000:3000
+    command: yarn run start
+    environment:
+      MAGIC_SECRET_KEY: sk_live_320200B661957D85
+      MONGODB_URL: mongodb://mdb:27017/todo
+    depends_on:
+      - mdb
+      - redis
